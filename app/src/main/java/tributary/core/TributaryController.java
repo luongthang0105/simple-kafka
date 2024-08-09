@@ -35,6 +35,10 @@ public class TributaryController {
         topics.put(id, new Topic<String>(id));
     }
 
+    public <T> void createTopic(String id, Class<T> type) {
+        topics.put(id, new Topic<T>(id));
+    }
+
     public void createPartition(String topicId, String partitionId) {
         Partition newPartition = new Partition(partitionId);
         partitions.put(partitionId, newPartition);
@@ -73,6 +77,10 @@ public class TributaryController {
         ConsumerGroup consumerGroup = consumerGroups.get(consumerGroupId);
         Consumer consumer = consumers.get(consumerId);
         consumerGroup.deleteConsumer(consumer);
+    }
+
+    public <T> void createProducer(String id, String allocateStrategy, Class<T> type) {
+        producers.put(id, new Producer<T>(id, findAllocateStrategy(allocateStrategy)));
     }
 
     public void createIntegerProducer(String id, String allocateStrategy) {
