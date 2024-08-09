@@ -31,7 +31,19 @@ public class Topic<T> {
     }
 
     public String show() {
-        // TODO
-        return "hi";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Topic ID: ").append(id).append("\n\n");
+
+        sb.append("Partitions:\n");
+        for (Partition partition : partitions) {
+            sb.append(partition.toString()).append("\n");
+        }
+
+        sb.append("Consumer Groups:\n");
+        for (ConsumerGroup consumerGroup : consumerGroups) {
+            sb.append(consumerGroup.toString()).append("\n");
+        }
+
+        return sb.toString();
     }
 }
