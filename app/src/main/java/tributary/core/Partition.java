@@ -60,6 +60,7 @@ public class Partition {
             System.out.printf("- message (id: %s, value: %s)");
         }
     }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("ID: ").append(id).append("\n");
