@@ -4,6 +4,10 @@ import java.util.HashMap;
 import tributary.core.allocateStrategies.AllocateStrategy;
 import tributary.core.allocateStrategies.ManualStrategy;
 import tributary.core.allocateStrategies.RandomStrategy;
+import tributary.core.input.ConsumeInput;
+import tributary.core.input.ProduceInput;
+import tributary.core.parallel.ParallelConsumer;
+import tributary.core.parallel.ParallelProducer;
 import tributary.core.rebalancingStrategies.RangeStrategy;
 import tributary.core.rebalancingStrategies.RebalancingStrategy;
 import tributary.core.rebalancingStrategies.RoundRobinStrategy;
@@ -79,6 +83,14 @@ public class TributaryController {
         producers.put(id, new Producer<String>(id, findAllocateStrategy(allocateStrategy)));
     }
 
+    /**
+     * Method for producing events, either for Random allocation or Manual Allocation
+     * @param <T>
+     * @param producerId
+     * @param topicId
+     * @param message
+     * @param partitionId
+     */
     public <T> void produceMessage(String producerId, String topicId, Message<T> message, String partitionId) {
         Producer<T> producer = (Producer<T>) producers.get(producerId);
         Topic<T> topic = (Topic<T>) topics.get(topicId);
@@ -86,7 +98,7 @@ public class TributaryController {
         producer.produceMessage(topic, message, partition);
     }
 
-    public <T> void produceMessage(String producerId, String topicId, Message<T> message) {
+    public <T> void produceMessageWithEncapsulatedKey(String producerId, String topicId, Message<T> message) {
         Producer<T> producer = (Producer<T>) producers.get(producerId);
         Topic<T> topic = (Topic<T>) topics.get(topicId);
         Partition partition = partitions.get(message.getDesirePartition());
@@ -112,13 +124,33 @@ public class TributaryController {
         ConsumerGroup consumerGroup = consumerGroups.get(consumerGroupId);
         return consumerGroup.show();
     }
-    // public void parallelProduce(String producer, String topic, List<Message> messages) {
 
-    //     producer.parallelProduce(topic, messages);
-    // }
-    // public void parallelConsume(String consumer, String partition) {
-    //     consumer.parallelConsume(partition);
-    // }
+    /**
+     * For Random allocation, we don't care whether key is null or not.
+     * For Manual allocation, key must have been specified at the creation of ProduceInput by either:
+     *  - Encapsulate the key within the message, or
+     *  - Pass the key to ProduceInput constructor
+     * @param inputs
+     */
+    public void parallelProduce(ProduceInput... inputs) {
+        for (ProduceInput input : inputs) {
+            String producerId = input.getProducerId();
+            String topicId = input.getTopicId();
+            Message<?> message = input.getMessage();
+            String key = input.getKey();
+
+            ParallelProducer prod = new ParallelProducer(this, producerId, topicId, message, key);
+            prod.start();
+        }
+    }
+
+    public void parallelConsume(ConsumeInput... inputs) {
+        for (ConsumeInput input : inputs) {
+            ParallelConsumer cons = new ParallelConsumer(this, input.getConsumerId(), input.getPartitionId());
+            cons.start();
+        }
+    }
+
     public void setConsumerGroupRebalancing(String consumerGroupId, String rebalancingStrategy) {
         ConsumerGroup consumerGroup = consumerGroups.get(consumerGroupId);
         consumerGroup.setRebalancingStrategy(findRebalancingStrategy(rebalancingStrategy));
