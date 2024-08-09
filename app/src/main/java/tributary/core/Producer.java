@@ -16,8 +16,4 @@ public class Producer<T> {
         System.out.printf("Message (id: %s) has been produced by Producer (id: %s) inside Partition (id: %s).%n",
                 message.getId(), id, partition.getId());
     }
-
-    // public void parallelProduce(Topic topic, List<Message<T>> messages) {
-    //     // TODO
-    // }
 }
