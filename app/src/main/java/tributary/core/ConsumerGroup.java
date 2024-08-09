@@ -14,6 +14,10 @@ public class ConsumerGroup {
         return consumers;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public ConsumerGroup(String id, Topic subscribedTopic, RebalancingStrategy rebalancingStrategy) {
         this.id = id;
         this.subscribedTopic = subscribedTopic;
@@ -28,15 +32,30 @@ public class ConsumerGroup {
     }
 
     public void deleteConsumer(Consumer consumer) {
+        String id = consumer.getId();
         consumers.remove(consumer);
+        if (consumers.size() == 0) {
+            System.out.println("Deleting consumer (id: " + id + ")...");
+            return;
+        }
+        System.out.println("Deleting consumer (id: " + id + ")...");
         rebalancingStrategy.allocatePartition(subscribedTopic.getPartitions(), consumers);
-    }
-
-    public String show() {
-        return "hihi";
     }
 
     public void setRebalancingStrategy(RebalancingStrategy rebalancingStrategy) {
         this.rebalancingStrategy = rebalancingStrategy;
+        System.out.println("New rebalancing strategy has been set!\n");
+    }
+
+    public String show() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Consumer Group ID: ").append(id).append("\n");
+
+        sb.append("Consumers:\n");
+        for (Consumer consumer : consumers) {
+            sb.append(consumer.toString()).append("\n");
+        }
+
+        return sb.toString();
     }
 }

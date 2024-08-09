@@ -22,4 +22,12 @@ public class Message<T> {
     public String getDesirePartition() {
         return key;
     }
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Message Details:\n");
+        sb.append("ID: ").append(id).append("\n");
+        sb.append("Key: ").append(key).append("\n");
+        sb.append("Value: ").append(value).append("\n");
+        return sb.toString();
+    }
 }

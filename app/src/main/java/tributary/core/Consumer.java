@@ -1,7 +1,9 @@
 package tributary.core;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.List;
 
 public class Consumer {
@@ -9,8 +11,20 @@ public class Consumer {
     private Topic<?> topic;
     private HashMap<String, Boolean> partitions;
     private List<Message<?>> consumedMessages;
+    private List<Message<?>> consumedMessages;
+
     public Consumer(String id) {
         this.id = id;
+        partitions = new HashMap<>();
+        consumedMessages = new ArrayList<>();
+    }
+
+    public int getNumConsumedMessages() {
+        return consumedMessages.size();
+    }
+
+    public String getId() {
+        return id;
         partitions = new HashMap<>();
         consumedMessages = new ArrayList<>();
     }
@@ -26,9 +40,11 @@ public class Consumer {
     public void setTopic(Topic<?> topic) {
         this.topic = topic;
     }
+
     public void addConsumedMessage(Message<?> message) {
         consumedMessages.add(message);
     }
+
     private Partition extractPartition(String partitionId) {
         Boolean isValidPartition = partitions.get(partitionId);
         if (isValidPartition == null)
@@ -40,6 +56,7 @@ public class Consumer {
         Partition partition = extractPartition(partitionId);
         if (partition == null)
             return;
+        System.out.printf("Consumer (id: %s) is consuming: %n", id);
         partition.consumeMessage(this);
     }
 
@@ -47,6 +64,8 @@ public class Consumer {
         Partition partition = extractPartition(partitionId);
         if (partition == null)
             return;
+        System.out.printf("Consumer (id: %s) is consuming: %n", id);
+
         partition.consumeMessages(numMessages, this);
     }
 
@@ -60,5 +79,12 @@ public class Consumer {
 
     public void playback(Partition partition, int offset) {
         partition.playback(offset, this);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Consumer Details:\n");
+        sb.append("ID: ").append(id).append("\n");
+        return sb.toString();
     }
 }

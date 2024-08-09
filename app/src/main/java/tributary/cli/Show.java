@@ -18,6 +18,6 @@ public class Show {
     }
 
     public static void showTopic(String topicId, TributaryController controller) {
-        controller.showTopic(topicId);
+        System.out.println(controller.showTopic(topicId));
     }
 }

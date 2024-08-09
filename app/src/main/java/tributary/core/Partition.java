@@ -36,7 +36,7 @@ public class Partition {
     public synchronized <T> void consumeMessage(Consumer consumer) {
         Message<T> message = messages.get(latestConsumedOffset);
         consumer.addConsumedMessage(message);
-        System.out.printf("- message (id: %s, value: %s)", message.getId(), message.getValue());
+        System.out.println("- message (id: " + message.getId() + ", value: " + message.getValue() + ")");
         latestConsumedOffset += 1;
     }
 
@@ -45,7 +45,7 @@ public class Partition {
         while (numMessageConsumed < numMessages && latestConsumedOffset < messages.size()) {
             Message<T> message = messages.get(latestConsumedOffset);
             consumer.addConsumedMessage(message);
-            System.out.printf("- message (id: %s, value: %s)");
+            System.out.println("- message (id: " + message.getId() + ", value: " + message.getValue() + ")");
             latestConsumedOffset += 1;
             numMessageConsumed += 1;
         }
@@ -53,10 +53,20 @@ public class Partition {
 
     public synchronized <T> void playback(int offset, Consumer consumer) {
         // playback from offset to the latest consumed message
+        System.out.printf("Consumer (id: %s) is playing back: %n", consumer.getId());
         for (int i = offset; i < latestConsumedOffset; i++) {
             Message<T> message = messages.get(i);
             consumer.addConsumedMessage(message);
             System.out.printf("- message (id: %s, value: %s)");
         }
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(id).append("\n");
+        for (Message message : messages) {
+            sb.append("").append(message.toString()).append("\n\n");
+        }
+        return sb.toString();
     }
 }
