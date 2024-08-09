@@ -1,6 +1,8 @@
 package tributary.core;
 
 import java.util.HashMap;
+import java.util.Map;
+
 import tributary.core.allocateStrategies.AllocateStrategy;
 import tributary.core.allocateStrategies.ManualStrategy;
 import tributary.core.allocateStrategies.RandomStrategy;
@@ -73,10 +75,14 @@ public class TributaryController {
         consumerGroup.addConsumer(newConsumer);
     }
 
-    public void deleteConsumer(String consumerGroupId, String consumerId) {
-        ConsumerGroup consumerGroup = consumerGroups.get(consumerGroupId);
-        Consumer consumer = consumers.get(consumerId);
-        consumerGroup.deleteConsumer(consumer);
+    public void deleteConsumer(String consumerId) {
+        for (Map.Entry<String, ConsumerGroup> entry : consumerGroups.entrySet()) {
+            for (Consumer consumer : entry.getValue().getConsumers()) {
+                if (consumer.getId().equals(consumerId)) {
+                    entry.getValue().deleteConsumer(consumer);
+                }
+            }
+        }
     }
 
     public <T> void createProducer(String id, String allocateStrategy, Class<T> type) {

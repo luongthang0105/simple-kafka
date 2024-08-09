@@ -33,24 +33,30 @@ public class Partition {
         return messages.size();
     }
 
-    public synchronized void consumeMessage() {
-        // TODO: implement consume mechanism
+    public synchronized <T> void consumeMessage(Consumer consumer) {
+        Message<T> message = messages.get(latestConsumedOffset);
+        consumer.addConsumedMessage(message);
+        System.out.printf("- message (id: %s, value: %s)", message.getId(), message.getValue());
         latestConsumedOffset += 1;
     }
 
-    public synchronized void consumeMessages(int numMessages) {
+    public synchronized <T> void consumeMessages(int numMessages, Consumer consumer) {
         int numMessageConsumed = 0;
         while (numMessageConsumed < numMessages && latestConsumedOffset < messages.size()) {
-            // TODO: implement consume mechanism
+            Message<T> message = messages.get(latestConsumedOffset);
+            consumer.addConsumedMessage(message);
+            System.out.printf("- message (id: %s, value: %s)");
             latestConsumedOffset += 1;
             numMessageConsumed += 1;
         }
     }
 
-    public synchronized void playback(int offset) {
+    public synchronized <T> void playback(int offset, Consumer consumer) {
         // playback from offset to the latest consumed message
         for (int i = offset; i < latestConsumedOffset; i++) {
-            // TODO: implement consume mechanism
+            Message<T> message = messages.get(i);
+            consumer.addConsumedMessage(message);
+            System.out.printf("- message (id: %s, value: %s)");
         }
     }
 }
