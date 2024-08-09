@@ -17,14 +17,10 @@ public class Parallel {
     }
 
     public static void parallelProduce(String allProducersInfo, TributaryController controller) {
-        System.out.println(allProducersInfo);
         String[] producersInfo = allProducersInfo.split("\\|");
         // System.out.println(producersInfo);
         ProduceInput[] inputs = new ProduceInput[producersInfo.length];
         int index = 0;
-        for (String str : producersInfo) {
-            System.out.println(str);
-        }
         for (String producerInfo : producersInfo) {
             String[] info = producerInfo.split(",");
             String producerId = info[0];
