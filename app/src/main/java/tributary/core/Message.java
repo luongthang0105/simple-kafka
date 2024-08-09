@@ -11,6 +11,10 @@ public class Message<T> {
         this.value = value;
     }
 
+    public T getValue() {
+        return value;
+    }
+
     public String getId() {
         return id;
     }
