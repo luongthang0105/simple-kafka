@@ -11,20 +11,18 @@ public class Parallel {
         String function = args[1];
         if (function.equals("produce")) {
             parallelProduce(args[2], controller);
+            parallelProduce(args[2], controller);
         } else if (function.equals("consume")) {
+            parallelConsume(args[2], controller);
             parallelConsume(args[2], controller);
         }
     }
 
     public static void parallelProduce(String allProducersInfo, TributaryController controller) {
-        System.out.println(allProducersInfo);
         String[] producersInfo = allProducersInfo.split("\\|");
         // System.out.println(producersInfo);
         ProduceInput[] inputs = new ProduceInput[producersInfo.length];
         int index = 0;
-        for (String str : producersInfo) {
-            System.out.println(str);
-        }
         for (String producerInfo : producersInfo) {
             String[] info = producerInfo.split(",");
             String producerId = info[0];
@@ -57,7 +55,11 @@ public class Parallel {
 
             inputs[index] = new ConsumeInput(consumerId, partitionId);
             index++;
+
+            inputs[index] = new ConsumeInput(consumerId, partitionId);
+            index++;
         }
+        controller.parallelConsume(inputs);
         controller.parallelConsume(inputs);
     }
 }
