@@ -10,6 +10,10 @@ public class ConsumerGroup {
     private RebalancingStrategy rebalancingStrategy;
     private List<Consumer> consumers;
 
+    public List<Consumer> getConsumers() {
+        return consumers;
+    }
+
     public ConsumerGroup(String id, Topic subscribedTopic, RebalancingStrategy rebalancingStrategy) {
         this.id = id;
         this.subscribedTopic = subscribedTopic;

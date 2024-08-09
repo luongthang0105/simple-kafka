@@ -11,6 +11,10 @@ public class Message<T> {
         this.value = value;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getDesirePartition() {
         return key;
     }

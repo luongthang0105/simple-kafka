@@ -9,6 +9,11 @@ public class Consumer {
     public Consumer(String id) {
         this.id = id;
     }
+
+    public String getId() {
+        return id;
+    }
+
     public void consumeMessage(Partition partition) {
         partition.consumeMessage();
     }

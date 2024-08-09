@@ -1,6 +1,7 @@
 package tributary.core;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import tributary.core.allocateStrategies.AllocateStrategy;
 import tributary.core.allocateStrategies.ManualStrategy;
@@ -40,14 +41,14 @@ public class TributaryController {
     }
 
     public RebalancingStrategy findRebalancingStrategy(String strategy) {
-        if (strategy.equals("round robin")) {
+        if (strategy.equals("RoundRobin")) {
             return new RoundRobinStrategy();
         }
         return new RangeStrategy();
     }
 
     public AllocateStrategy findAllocateStrategy(String strategy) {
-        if (strategy.equals("manual")) {
+        if (strategy.equals("Manual")) {
             return new ManualStrategy();
         }
         return new RandomStrategy();
@@ -66,10 +67,14 @@ public class TributaryController {
         consumerGroup.addConsumer(newConsumer);
     }
 
-    public void deleteConsumer(String consumerGroupId, String consumerId) {
-        ConsumerGroup consumerGroup = consumerGroups.get(consumerGroupId);
-        Consumer consumer = consumers.get(consumerId);
-        consumerGroup.deleteConsumer(consumer);
+    public void deleteConsumer(String consumerId) {
+        for (Map.Entry<String, ConsumerGroup> entry : consumerGroups.entrySet()) {
+            for (Consumer consumer : entry.getValue().getConsumers()) {
+                if (consumer.getId().equals(consumerId)) {
+                    entry.getValue().deleteConsumer(consumer);
+                }
+            }
+        }
     }
 
     public void createIntegerProducer(String id, String allocateStrategy) {
