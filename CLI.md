@@ -158,7 +158,7 @@
   </tr>
   <tr>
     <td>
-      <code>parallel produce &lt;producer1&gt;,&lt;topic1&gt;,&lt;event1&gt;|&lt;producer2&gt;,&lt;topic2&gt;,&lt;event2&gt;... </code>
+      <code>parallel produce &lt;producer1&gt;,&lt;topic1&gt;,&lt;event1&gt;,&lt;partition1&gt;|&lt;producer2&gt;,&lt;topic2&gt;,&lt;event2&gt;,&lt;partition1&gt;... </code>
     </td>
     <td>
       <ul>

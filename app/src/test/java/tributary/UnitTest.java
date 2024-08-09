@@ -250,7 +250,7 @@ public class UnitTest {
         @Nested
         public class ParallelProduce {
             @Test
-            public void oneProducerToManyPartition() {
+            public void oneProducerToManyPartition() throws InterruptedException {
                 controller.createStringTopic("StringTopic");
                 controller.createPartition("StringTopic", "partition1");
                 controller.createPartition("StringTopic", "partition2");
@@ -269,6 +269,7 @@ public class UnitTest {
 
                 controller.parallelProduce(inputs);
 
+                Thread.sleep(100);
                 // Check whether each partition has 1 message;
                 assertEquals(1, controller.getPartitionSize("partition1"));
                 assertEquals(1, controller.getPartitionSize("partition2"));

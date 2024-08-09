@@ -27,6 +27,8 @@ public class TributaryCLI {
                 Show.processShow(command, controller);
             } else if (command.startsWith("set")) {
                 Set.processSet(command, controller);
+            } else if (command.startsWith("parallel")) {
+                Parallel.processParallel(command, controller);
             }
         }
         scanner.close();
