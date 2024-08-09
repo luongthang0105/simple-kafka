@@ -13,5 +13,7 @@ public class Producer<T> {
 
     public void produceMessage(Topic<T> topic, Message<T> message, Partition partition) {
         allocateStrategy.allocateMessagesToPartition(topic, message, partition);
+        System.out.printf("Message (id: %s) has been produced by Producer (id: %s) inside Partition (id: %s).%n",
+                message.getId(), id, partition.getId());
     }
 }

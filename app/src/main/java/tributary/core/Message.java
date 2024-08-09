@@ -11,7 +11,23 @@ public class Message<T> {
         this.value = value;
     }
 
+    public T getValue() {
+        return value;
+    }
+
+    public String getId() {
+        return id;
+    }
+
     public String getDesirePartition() {
         return key;
+    }
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Message Details:\n");
+        sb.append("ID: ").append(id).append("\n");
+        sb.append("Key: ").append(key).append("\n");
+        sb.append("Value: ").append(value).append("\n");
+        return sb.toString();
     }
 }
