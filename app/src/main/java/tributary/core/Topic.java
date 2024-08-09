@@ -18,6 +18,10 @@ public class Topic<T> {
         return partitions;
     }
 
+    public Partition getPartition(String partitionId) {
+        return partitions.stream().filter(part -> part.getId().equals(partitionId)).findAny().orElse(null);
+    }
+
     public void addPartition(Partition partition) {
         partitions.add(partition);
     }

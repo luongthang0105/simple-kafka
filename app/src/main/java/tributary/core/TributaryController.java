@@ -1,9 +1,6 @@
 package tributary.core;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import tributary.core.allocateStrategies.AllocateStrategy;
 import tributary.core.allocateStrategies.ManualStrategy;
 import tributary.core.allocateStrategies.RandomStrategy;
@@ -42,14 +39,14 @@ public class TributaryController {
     }
 
     public RebalancingStrategy findRebalancingStrategy(String strategy) {
-        if (strategy.equals("round robin")) {
+        if (strategy.equals("RoundRobin")) {
             return new RoundRobinStrategy();
         }
         return new RangeStrategy();
     }
 
     public AllocateStrategy findAllocateStrategy(String strategy) {
-        if (strategy.equals("manual")) {
+        if (strategy.equals("Manual")) {
             return new ManualStrategy();
         }
         return new RandomStrategy();
@@ -98,14 +95,12 @@ public class TributaryController {
 
     public void consumeMessage(String consumerId, String partitionId) {
         Consumer consumer = consumers.get(consumerId);
-        Partition partition = partitions.get(partitionId);
-        consumer.consumeMessage(partition);
+        consumer.consumeMessage(partitionId);
     }
 
     public void consumeMessages(String consumerId, String partitionId, int numMessages) {
         Consumer consumer = consumers.get(consumerId);
-        Partition partition = partitions.get(partitionId);
-        consumer.consumeMessages(partition, numMessages);
+        consumer.consumeMessages(partitionId, numMessages);
     }
 
     public String showTopic(String topicId) {
@@ -129,8 +124,14 @@ public class TributaryController {
         consumerGroup.setRebalancingStrategy(findRebalancingStrategy(rebalancingStrategy));
     }
 
+    // Helpers for Testing
     public int getNumConsumedMessages(String partitionId) {
         Partition p = partitions.get(partitionId);
         return p.getNumConsumedMessages();
+    }
+
+    public int getPartitionSize(String partitionId) {
+        Partition p = partitions.get(partitionId);
+        return p.getPartitionSize();
     }
 }

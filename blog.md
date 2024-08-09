@@ -63,19 +63,11 @@ List of scenarios:
 
 ### Testing Plan
 
-1. Unit tests on the Tributary command line interface:
-
-   - Test that every command lines corresponds to the right action.
-
 2. Unit tests on individual components:
 
    2.1. Producer:
 
-   a) Allocation of Messages to Partitions as a random producer:
-
-   - Test that the producer requests the Tributary system to randomly assign a message to a partition. Test the randomness using seeds.
-
-   b) Allocation of Messages to Partitions as a manual producer
+   a) Allocation of Messages to Partitions as a manual producer
 
    - Test that the producer requests the Tributary system to assign a message to a particular partition by providing its corresponding key.
    - Make sure the key of the given message identical to the Id of the assigned partition.
