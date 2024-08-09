@@ -29,6 +29,10 @@ public class Partition {
         return latestConsumedOffset;
     }
 
+    public int getPartitionSize() {
+        return messages.size();
+    }
+
     public synchronized void consumeMessage() {
         // TODO: implement consume mechanism
         latestConsumedOffset += 1;

@@ -19,6 +19,7 @@ public class ConsumerGroup {
 
     public void addConsumer(Consumer consumer) {
         consumers.add(consumer);
+        consumer.setTopic(subscribedTopic);
         rebalancingStrategy.allocatePartition(subscribedTopic.getPartitions(), consumers);
     }
 
