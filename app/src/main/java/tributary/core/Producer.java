@@ -14,8 +14,4 @@ public class Producer<T> {
     public void produceMessage(Topic<T> topic, Message<T> message, Partition partition) {
         allocateStrategy.allocateMessagesToPartition(topic, message, partition);
     }
-
-    // public void parallelProduce(Topic topic, List<Message<T>> messages) {
-    //     // TODO
-    // }
 }
