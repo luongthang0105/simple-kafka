@@ -5,14 +5,7 @@ import tributary.core.TributaryController;
 import tributary.core.input.ConsumeInput;
 import tributary.core.input.ProduceInput;
 
-import tributary.core.Message;
-import tributary.core.TributaryController;
-import tributary.core.input.ConsumeInput;
-import tributary.core.input.ProduceInput;
-
 public class Parallel {
-    public static void processParallel(String command, TributaryController controller) {
-
     public static void processParallel(String command, TributaryController controller) {
         String[] args = command.split(" ");
         String function = args[1];
@@ -49,26 +42,7 @@ public class Parallel {
             }
         }
         controller.parallelProduce(inputs);
-        String partitionId = info[3];
-
-        MessageBuilder builder = new MessageBuilder(eventJSONFilePath);
-
-        try {
-            Message<?> message = builder.constructMessage();
-            inputs[index] = new ProduceInput(producerId, topicId, partitionId, message);
-            ++index;
-        } catch (Exception e) {
-            System.err.println("Failed to construct or produce message: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }controller.parallelProduce(inputs);
-
     }
-
-    public static void parallelConsume(String allConsumersInfo, TributaryController controller) {
-        String[] consumersInfo = allConsumersInfo.split("\\|");
-        ConsumeInput[] inputs = new ConsumeInput[consumersInfo.length];
-        int index = 0;
 
     public static void parallelConsume(String allConsumersInfo, TributaryController controller) {
         String[] consumersInfo = allConsumersInfo.split("\\|");
