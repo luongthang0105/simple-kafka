@@ -36,10 +36,6 @@ public class Consumer {
         partition.consumeMessages(numMessages);
     }
 
-    public void parallelConsume(Partition partition) {
-        // TODO
-    }
-
     public void addPartition(Partition partition) {
         partitions.put(partition.getId(), true);
     }
