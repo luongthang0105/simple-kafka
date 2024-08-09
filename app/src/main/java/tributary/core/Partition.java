@@ -25,11 +25,11 @@ public class Partition {
         return id;
     }
 
-    public int getNumConsumedMessages() {
+    public synchronized int getNumConsumedMessages() {
         return latestConsumedOffset;
     }
 
-    public int getPartitionSize() {
+    public synchronized int getPartitionSize() {
         return messages.size();
     }
 
