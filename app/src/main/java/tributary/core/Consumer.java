@@ -1,9 +1,7 @@
 package tributary.core;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.List;
 
 public class Consumer {
@@ -11,20 +9,9 @@ public class Consumer {
     private Topic<?> topic;
     private HashMap<String, Boolean> partitions;
     private List<Message<?>> consumedMessages;
-    private List<Message<?>> consumedMessages;
 
     public Consumer(String id) {
         this.id = id;
-        partitions = new HashMap<>();
-        consumedMessages = new ArrayList<>();
-    }
-
-    public int getNumConsumedMessages() {
-        return consumedMessages.size();
-    }
-
-    public String getId() {
-        return id;
         partitions = new HashMap<>();
         consumedMessages = new ArrayList<>();
     }

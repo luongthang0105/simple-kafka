@@ -1,9 +1,13 @@
-# Tributary - A Simplified Apache Kafka
+# A Simplified Apache Kafka
 
 ## Final Design
 
 ### Usability Tests List
-video link https://drive.google.com/file/d/1ICtVjM-4FAkAJTcnJEPZnsBWERNINTtY/view?usp=sharing
+
+Normal usage demo: https://drive.google.com/file/d/1ICtVjM-4FAkAJTcnJEPZnsBWERNINTtY/view?usp=sharing
+
+Parallel consumption usage demo: https://youtu.be/k_IQ4mBEkGg
+
 List of scenarios:
 
 1. Simple system with 1 producer, 1 topic with 1 partition, 1 consumer group with 1 consumer.
