@@ -1,4 +1,4 @@
-# Tributary - A Simplified Apache Kafka
+# A Simplified Apache Kafka
 
 ## Preliminary Design
 
