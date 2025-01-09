@@ -4,6 +4,8 @@ Below is the specification of this project (or assignment 👀). However, we do 
 - [Initial Design](./developer_blogs/InitialDesign.md)
 - [Final Design](./developer_blogs/FinalDesign.md)  
 
+# Table of Contents
+- [Table of Contents](#table-of-contents)
 - [1. Overview](#1-overview)
 - [2. Engineering Requirements](#2-engineering-requirements)
   - [2.1. Message Lifecycle: A Simple Example](#21-message-lifecycle-a-simple-example)
